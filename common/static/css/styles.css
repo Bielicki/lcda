@@ -1,0 +1,113 @@
+.logo {
+    font-size: 16px;
+    margin-top: 15px;
+    margin-bottom: 20px;
+}
+
+.password-reset-link {
+    margin-top: 15px;
+}
+
+.text-bold {
+    font-weight: bold;
+}
+
+.icon {
+    width: 30px;
+    height: 30px;
+    margin: 2px;
+}
+
+.search-input {
+    margin-bottom: 5px;
+}
+
+.message-content {
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+.table-buttons {
+    width: 110px;
+    display: inline-block;
+}
+
+.img-responsive {
+    width: 180px;
+    height: 230px;
+}
+
+.menu-label{
+    color: #337ab7;
+}
+
+.top-15 {
+    margin-top: 15px;
+}
+
+.top-20 {
+    margin-top: 20px;
+}
+
+.top-25 {
+    margin-top: 25px;
+}
+
+.bottom-10 {
+    margin-bottom: 10px;
+}
+
+.bottom-15 {
+    margin-bottom: 15px;
+}
+
+.bottom-25 {
+    margin-bottom: 25px;
+}
+
+.bottom-35 {
+    margin-bottom: 35px;
+}
+
+.bottom-45 {
+    margin-bottom: 45px;
+}
+
+
+
+
+/*Chosen*/
+
+.form-control-chosen {
+    padding: 0;
+    height: auto;
+    display: block;
+}
+
+.chosen-container-multi .chosen-choices {
+    border: 0;
+    min-height: 60px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    background-image: none;
+}
+
+.chosen-container-single .chosen-single {
+    padding-top: 5px;
+    padding-left: 15px;
+    border: 0;
+    height: 34px;
+    background: white;
+}
+
+.chosen-container .chosen-drop {
+    border-top: 1px solid #aaa;
+}
+
+.chosen-container-active .chosen-choices {
+    box-shadow: none;
+}
+
+.chosen-container-single .chosen-single div {
+    margin-top: 5px;
+}

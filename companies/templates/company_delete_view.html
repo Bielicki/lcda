@@ -1,0 +1,24 @@
+{% extends 'base_menu.html' %}
+{% load static widget_tweaks %}
+
+{% block title %}Delete company{% endblock %}
+
+{% block header %}Delete company{% endblock %}
+
+{% block main_content %}
+    <form action="" method="POST" novalidate>
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-12 message-content">
+                Are you sure want to delete company: <strong>{{ object.name }}</strong>?
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-12">
+                <a href="{% url 'companies:company_list' %}" class="btn btn-default">No</a>
+                <button type="submit" class="btn btn-primary">Yes</button>
+            </div>
+        </div>
+    </form>
+{% endblock %}
+

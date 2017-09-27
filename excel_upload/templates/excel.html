@@ -1,0 +1,23 @@
+{% extends 'base_menu.html' %}
+{% load static widget_tweaks %}
+
+{% block title %}Load Excel{% endblock %}
+
+{% block header %}Load Excel{% endblock %}
+
+{% block main_content %}
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="form-inline">
+                <div class="form-group">
+                    <form action="" enctype="multipart/form-data" method="POST">
+                    {% csrf_token %}
+                    {{ form }}
+                    <input type="submit">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

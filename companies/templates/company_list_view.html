@@ -1,0 +1,67 @@
+{% extends 'base_menu.html' %}
+{% load static widget_tweaks %}
+
+{% block title %}Companies{% endblock %}
+
+{% block header %}Companies{% endblock %}
+
+{% block main_content %}
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="form-inline">
+                <div class="form-group">
+                    {{ search_form.client|add_class:'form-control search-input'|attr:'placeholder:Client name' }}
+                </div>
+                <div class="form-group">
+                    {{ search_form.name|add_class:'form-control search-input'|attr:'placeholder:Company name' }}
+                </div>
+                <div class="form-group">
+                    {{ search_form.code|add_class:'form-control search-input'|attr:'placeholder:Code' }}
+                </div>
+                <div class="form-group">
+                    {{ search_form.email|add_class:'form-control search-input'|attr:'placeholder:Engagement' }}
+                </div>
+                <div class="form-group">
+                    {{ search_form.contract|add_class:'form-control search-input'|attr:'placeholder:Contract Type' }}
+                </div>
+                <div class="form-group">
+                    {{ search_form.survey|add_class:'form-control search-input'|attr:'placeholder:Surveys' }}
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-0 text-right">
+            <a class="btn btn-success" href="{% url 'companies:company_create' %}">Create</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <table width="100%" class="table table-striped table-bordered table-hover" id="table">
+                <thead>
+                <tr>
+                    <th>Client</th>
+                    <th>Name</th>
+                    <th>Code</th>
+                    <th>Engagement Specialist</th>
+                    <th>Contract type</th>
+                    <th>Survey Types</th>
+                    <th>Years</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    {{ block.super }}
+    <script src="{% static 'js/company_list_view.js' %}"></script>
+    <script>
+        var url = '{% url 'companies:company_list_datatable' %}';
+        $(document).ready(function () {
+            CompanyListView.setup(url);
+        });
+    </script>
+{% endblock %}
