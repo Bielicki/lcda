@@ -80,7 +80,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 LOGIN_URL = '/login/'
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/companies/'
 LOGOUT_URL = '/logout/'
 
 LANGUAGE_CODE = 'en-us'
