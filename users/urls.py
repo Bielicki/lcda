@@ -31,7 +31,7 @@ urlpatterns = [
     url(r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
         password_reset_confirm, RESET, name='password_reset_confirm'),
     url(r'^reset/done/$', password_reset_complete, RESET_DONE, name='password_reset_complete'),
-
+    url(r'^$', views.WelcomeView.as_view(), name='welcome'),
     # url(r'^$', views.UserListView.as_view(), name='user_list'),
     # url(r'^datatable/$', views.UserDataTableView.as_view(), name='user_list_datatable'),
     # url(r'^create/$', views.UserCreateView.as_view(), name='user_create'),

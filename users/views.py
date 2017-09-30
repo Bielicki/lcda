@@ -1,3 +1,4 @@
+from django.shortcuts import render
 from django_datatables_view.base_datatable_view import BaseDatatableView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth import models as auth_models
@@ -93,6 +94,11 @@ from django import shortcuts
 #
 #         return qs.filter(qset)
 
+
+
+class WelcomeView(LoginRequiredMixin, View):
+    def get(self, request):
+            return render(request, 'welcome.html')
 
 class UserDetailView(LoginRequiredMixin, DetailView):
     raise_exception = True
