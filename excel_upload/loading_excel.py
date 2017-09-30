@@ -6,6 +6,7 @@ from companies.models import Company, Client, ClientContact, SuperSector, Sector
 # - Populate Static Models
 # - Change Yes/No to True/False
 
+
 def boolify(string):
     if string == 'yes':
         return True
@@ -54,10 +55,13 @@ def load_excel(file):
                 company.contract_type = ContractType.objects.get(name=company_data['Contract type'].iloc[0])
                 company.save()
 
-                s = ['TRS', 'Automotive', 'Financial Services', 'Mining', 'MLS', 'BPM']
-                surveys = [Survey.objects.get(name=survey) for survey in s if survey in company_data['2017 Surveys'].iloc[0]]
-                company.surveys.add(*surveys)
-                company.save()
+                try:
+                    s = ['TRS', 'Automotive', 'Financial Services', 'Mining', 'MLS', 'BPM']
+                    surveys = [Survey.objects.get(name=survey) for survey in s if survey in company_data['2017 Surveys'].iloc[0]]
+                    company.surveys.add(*surveys)
+                    company.save()
+                except TypeError:
+                    pass
 
             else:
                 company = Company.objects.get(name=company_name)
@@ -95,9 +99,12 @@ def load_excel(file):
                     client_contact.invoice = True
                     client_contact.save()
 
-                    s = ['TRS', 'Automotive', 'Financial Services', 'Mining', 'MLS', 'BPM']
-                    surveys = [Survey.objects.get(name=survey) for survey in s if survey in company_data['2017 Surveys'].iloc[0]]
-                    client_contact.surveys.add(*surveys)
+                    try:
+                        s = ['TRS', 'Automotive', 'Financial Services', 'Mining', 'MLS', 'BPM']
+                        surveys = [Survey.objects.get(name=survey) for survey in s if survey in company_data['2017 Surveys'].iloc[0]]
+                        client_contact.surveys.add(*surveys)
+                    except TypeError:
+                        pass
 
                     trainings = [Training.objects.get(name=training) for training in 'TRS Excel Maximising Mobility EES'.split(' ')]
                     client_contact.trainings.add(*trainings)

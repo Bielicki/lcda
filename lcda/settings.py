@@ -17,11 +17,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'widget_tweaks',
     'django_cleanup',
-    'phonenumber_field',
     'common',
     'users',
-    'departments',
-    'evaluations',
     'companies',
     'contacts',
     'excel_upload'
@@ -37,7 +34,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'ldca.urls'
+ROOT_URLCONF = 'lcda.urls'
 
 TEMPLATES = [
     {
@@ -55,7 +52,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'ldca.wsgi.application'
+WSGI_APPLICATION = 'lcda.wsgi.application'
 
 DATABASES = {
     'default': {
@@ -63,6 +60,17 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'lcda_db',
+#         'USER': '',
+#         'PASSWORD': '',
+#         'HOST': '',
+#         'PORT': '5432',
+#     }
+# }
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -80,7 +88,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 LOGIN_URL = '/login/'
-LOGIN_REDIRECT_URL = '/companies/'
+LOGIN_REDIRECT_URL = '/companies'
 LOGOUT_URL = '/logout/'
 
 LANGUAGE_CODE = 'en-us'

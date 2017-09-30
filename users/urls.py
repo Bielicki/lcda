@@ -32,11 +32,11 @@ urlpatterns = [
         password_reset_confirm, RESET, name='password_reset_confirm'),
     url(r'^reset/done/$', password_reset_complete, RESET_DONE, name='password_reset_complete'),
 
-    url(r'^$', views.UserListView.as_view(), name='user_list'),
-    url(r'^datatable/$', views.UserDataTableView.as_view(), name='user_list_datatable'),
-    url(r'^create/$', views.UserCreateView.as_view(), name='user_create'),
-    url(r'^update/(?P<pk>(\d)+)/$', views.UserUpdateView.as_view(), name='user_update'),
+    # url(r'^$', views.UserListView.as_view(), name='user_list'),
+    # url(r'^datatable/$', views.UserDataTableView.as_view(), name='user_list_datatable'),
+    # url(r'^create/$', views.UserCreateView.as_view(), name='user_create'),
+    # url(r'^update/(?P<pk>(\d)+)/$', views.UserUpdateView.as_view(), name='user_update'),
     url(r'^change-password/(?P<pk>(\d)+)/$', views.UserChangePasswordView.as_view(), name='user_change_password'),
-    url(r'^delete/(?P<pk>(\d)+)/$', views.UserDeleteView.as_view(), name='user_delete'),
+    # url(r'^delete/(?P<pk>(\d)+)/$', views.UserDeleteView.as_view(), name='user_delete'),
     url(r'^details/(?P<pk>(\d)+)/$', views.UserDetailView.as_view(), name='user_detail'),
 ]
