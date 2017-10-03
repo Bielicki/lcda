@@ -99,6 +99,7 @@ class WelcomeView(LoginRequiredMixin, View):
     def get(self, request):
             return render(request, 'welcome.html')
 
+
 class UserDetailView(LoginRequiredMixin, DetailView):
     raise_exception = True
     model = auth_models.User

@@ -6,5 +6,3 @@ class ContactSearchForm(forms.Form):
     name = forms.CharField(max_length=32)
     surname = forms.CharField(max_length=32)
     email = forms.EmailField()
-    survey = forms.CharField(max_length=32)
-    location = forms.CharField(max_length=32)

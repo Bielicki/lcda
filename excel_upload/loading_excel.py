@@ -74,25 +74,24 @@ def load_excel(file):
                     client_contact.save()
 
                 else:
-                    client_contact = ClientContact(email=contact)
+                    client_contact = ClientContact.objects.get(email=contact)
 
                 if not YearOfParticipation.objects.filter(year=2017, company_id=company.id):
-
-                    year = YearOfParticipation.objects.filter(year=2017, company_id=company.id,
-                                                              company_setup=company_setup)
+                    year = YearOfParticipation(year=2017, company_id=company.id, company_setup=company_setup)
                     year.save()
+                else:
+                    year = YearOfParticipation.objects.get(year=2017, company_id=company.id)
 
-                if not ContactSetup.objects.filter(contact_id=client_contact.id, year_id=year.id):
+                if not ContactSetup.objects.filter(client_contact_id=client_contact.id, year_id=year.id):
                     contact_setup = ContactSetup()
+                    contact_setup.year_id = year.id
+                    contact_setup.client_contact_id = client_contact.id
+                    contact_setup.launch_meeting = True
                     contact_setup.after_meeting = True
                     contact_setup.access = True
                     contact_setup.report_access = True
                     contact_setup.invoice = True
                     contact_setup.trainings = 'TRS Automotive'
                     contact_setup.save()
-
-            if not YearOfParticipation.objects.filter(year=2017, company_id=company.id):
-                year = YearOfParticipation.objects.filter(year=2017, company_id=company.id, company_setup=company_setup)
-                year.save()
 
     return None

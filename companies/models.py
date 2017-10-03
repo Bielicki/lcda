@@ -36,6 +36,9 @@ class CompanySetup(models.Model):
     is_active = models.BooleanField()
     surveys = models.CharField(max_length=32)  # Choice in the Future
 
+    def __str__(self):
+        return f'Company Setup {self.id}'
+
 
 class ClientContact(models.Model):
     company = models.ForeignKey(Company, related_name='contacts')
@@ -66,4 +69,4 @@ class ContactSetup(models.Model):
     invoice = models.BooleanField()
 
     def __str__(self):
-        return f'self.client_contact - self.year'
+        return f'{self.client_contact} - {self.year}'
