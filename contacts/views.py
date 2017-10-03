@@ -22,8 +22,8 @@ class ContactListView(LoginSuperuserRequiredMixin, TemplateView):
 class ContactDataTableView(BaseDatatableView):
     raise_exception = True
     model = ClientContact
-    columns = ['company', 'first_name', 'last_name', 'email', 'may_contact', 'report_access', 'surveys', 'location', 'urls']
-    order_columns = ['company', 'first_name', 'last_name', 'email', 'may_contact', 'report_access', 'surveys', 'location', 'urls']
+    columns = ['company', 'first_name', 'last_name', 'email', 'may_contact', 'location', 'urls']
+    order_columns = ['company', 'first_name', 'last_name', 'email', 'may_contact', 'location', 'urls']
     max_display_length = 20
 
     def render_column(self, row, column):
@@ -40,10 +40,10 @@ class ContactDataTableView(BaseDatatableView):
                 return 'No'
         elif column == 'company':
             return row.company.name
-        elif column == 'report_access':
-            return row.report_access
-        elif column == 'surveys':
-            return list(set([survey.name for survey in row.surveys.all()]))
+        # elif column == 'report_access':
+        #     return row.report_access
+        # elif column == 'surveys':
+        #     return list(set([survey.name for survey in row.surveys.all()]))
         elif column == 'location':
             return row.location
         elif column == 'urls':
@@ -73,9 +73,9 @@ class ContactDataTableView(BaseDatatableView):
         if company:
             qset &= Q(company__name__icontains=company)
 
-        survey = self.request.POST.get('survey')
-        if survey:
-            qset &= Q(surveys__name__icontains=survey)
+        # survey = self.request.POST.get('survey')
+        # if survey:
+        #     qset &= Q(surveys__name__icontains=survey)
 
         location = self.request.POST.get('location')
         if location:

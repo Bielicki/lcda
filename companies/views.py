@@ -22,8 +22,8 @@ class CompanyListView(LoginSuperuserRequiredMixin, TemplateView):
 class CompaniesDataTableView(BaseDatatableView):
     raise_exception = True
     model = Company
-    columns = ['client', 'name', 'code', 'engagement_specialist', 'contract_type', 'survey', 'years', 'urls']
-    order_columns = ['client', 'name', 'code', 'engagement_specialist', 'contract_type', 'years', 'urls']
+    columns = ['client', 'name', 'code', 'years', 'urls']
+    order_columns = ['client', 'name', 'code', 'years', 'urls']
     max_display_length = 20
 
     def render_column(self, row, column):
@@ -33,12 +33,12 @@ class CompaniesDataTableView(BaseDatatableView):
             return row.code
         elif column == 'years':
             return list(set([year.year for year in row.years.all()]))
-        elif column == 'engagement_specialist':
-            return row.engagement_specialist
-        elif column == 'contract_type':
-            return row.contract_type.name
-        elif column == 'survey':
-            return list(set([survay.name for survay in row.surveys.all()]))
+        # elif column == 'engagement_specialist':
+        #     return row.engagement_specialist
+        # elif column == 'contract_type':
+        #     return row.contract_type.name
+        # elif column == 'survey':
+        #     return list(set([survay.name for survay in row.surveys.all()]))
         elif column == 'client':
             return row.client.name
 
@@ -61,21 +61,21 @@ class CompaniesDataTableView(BaseDatatableView):
         if code:
             qset &= Q(code__icontains=code)
 
-        email = self.request.POST.get('email')
-        if email:
-            qset &= Q(engagement_specialist__icontains=email)
-
-        survey = self.request.POST.get('survey')
-        if survey:
-            qset &= Q(surveys__name__icontains=survey)
+        # email = self.request.POST.get('email')
+        # if email:
+        #     qset &= Q(engagement_specialist__icontains=email)
+        #
+        # survey = self.request.POST.get('survey')
+        # if survey:
+        #     qset &= Q(surveys__name__icontains=survey)
 
         client = self.request.POST.get('client')
         if client:
             qset &= Q(client__name__contains=client)
 
-        contract = self.request.POST.get('contract')
-        if contract:
-            qset &= Q(contract_type__name__icontains=contract)
+        # contract = self.request.POST.get('contract')
+        # if contract:
+        #     qset &= Q(contract_type__name__icontains=contract)
 
         return qs.filter(qset).distinct()
 

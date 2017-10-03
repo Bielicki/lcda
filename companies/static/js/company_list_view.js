@@ -19,7 +19,7 @@
                     targets: -1,
                     className: 'text-right',
                     render: function (data, type, row) {
-                        return getButtons(row[7])[0].outerHTML;
+                        return getButtons(row[4])[0].outerHTML;
                     }
                 }],
                 iDisplayLength: 20,

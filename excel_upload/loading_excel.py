@@ -1,6 +1,6 @@
 import pandas as pd
 
-from companies.models import Company, Client, ClientContact, SuperSector, Sector, Survey, Training, ContractType, YearOfParticipation
+from companies.models import Company, Client, ClientContact, YearOfParticipation, ContactSetup, CompanySetup
 
 # TODO:
 # - Populate Static Models
@@ -9,13 +9,6 @@ from companies.models import Company, Client, ClientContact, SuperSector, Sector
 
 def boolify(string):
     if string == 'yes':
-        return True
-    elif string.lower() == 'no':
-        return False
-
-
-def pay_boolify(string):
-    if string.lower() == 'paid':
         return True
     elif string.lower() == 'no':
         return False
@@ -31,54 +24,40 @@ def load_excel(file):
     unique_clients = df['South Africa CLIENT DATABASE'].unique()
 
     for client_name in unique_clients:
-        if not Client.objects.filter(name=client_name).exists():
-            print('creating client')
-            client = Client(name=client_name).save()
-        else:
-            client = Client.objects.get(name=client_name)
 
+        if not Client.objects.filter(name=client_name):
+            Client(name=client_name).save()
+
+        # Unique Companies for a Client
         unique_companies = df[df['South Africa CLIENT DATABASE'] == client_name]['Local Company name'].unique()
-
         for company_name in unique_companies:
+
             company_data = df[df['Local Company name'] == company_name]
+
             if not Company.objects.filter(name=company_name):
                 company = Company()
-
-                company.name = company_name
-                company.engagement_specialist = company_data['Engagement Specialist'].iloc[0]
                 company.client_id = Client.objects.get(name=client_name).id
+                company.name = company_name
                 company.code = company_data['The CODE'].iloc[0]
-                company.super_sector = company_data['Super Sector'].iloc[0]
+                # company.super_sector = company_data['Super Sector'].iloc[0]
                 company.grading = company_data['Grading System'].iloc[0]
                 company.address = company_data['Company Physical Address'].iloc[0]
                 company.general_comments = company_data['General Comments'].iloc[0]
-                company.contract_type = ContractType.objects.get(name=company_data['Contract type'].iloc[0])
                 company.save()
-
-                try:
-                    s = ['TRS', 'Automotive', 'Financial Services', 'Mining', 'MLS', 'BPM']
-                    surveys = [Survey.objects.get(name=survey) for survey in s if survey in company_data['2017 Surveys'].iloc[0]]
-                    company.surveys.add(*surveys)
-                    company.save()
-                except TypeError:
-                    pass
 
             else:
                 company = Company.objects.get(name=company_name)
 
-            year = YearOfParticipation()
-            year.year = 2017
-
-            year.company = company
-
-
-            year.active = True
-            year.save()
+            company_setup = CompanySetup()
+            company_setup.engagement_specialist = company_data['Engagement Specialist'].iloc[0]
+            company_setup.contract_type = company_data['Contract type'].iloc[0]
+            company_setup.is_active = True
+            company_setup.surveys = company_data['2017 Surveys'].iloc[0]
+            company_setup.save()
 
             contacts = company_data['E-mail address'].unique()
-            contact_list = []
-
             for contact in contacts:
+
                 if not ClientContact.objects.filter(email=contact):
                     client_contact = ClientContact()
                     client_contact.company_id = company.id
@@ -92,28 +71,28 @@ def load_excel(file):
                     client_contact.comment = company_data['Comments'].iloc[0]
                     client_contact.notes = company_data['Notes (CST)'].iloc[0]
                     client_contact.may_contact = company_data['May contact?'].apply(boolify).iloc[0]
-                    client_contact.launch_meeting = company_data['2017 Launch Mtg'].apply(boolify).iloc[0]
-                    client_contact.after_meeting = True
-                    client_contact.access = True
-                    client_contact.report_access = True
-                    client_contact.invoice = True
                     client_contact.save()
 
-                    try:
-                        s = ['TRS', 'Automotive', 'Financial Services', 'Mining', 'MLS', 'BPM']
-                        surveys = [Survey.objects.get(name=survey) for survey in s if survey in company_data['2017 Surveys'].iloc[0]]
-                        client_contact.surveys.add(*surveys)
-                    except TypeError:
-                        pass
-
-                    trainings = [Training.objects.get(name=training) for training in 'TRS Excel Maximising Mobility EES'.split(' ')]
-                    client_contact.trainings.add(*trainings)
-                    client_contact.save()
                 else:
-                    client_contact = ClientContact.objects.get(email=contact)
+                    client_contact = ClientContact(email=contact)
 
-                contact_list.append(client_contact)
+                if not YearOfParticipation.objects.filter(year=2017, company_id=company.id):
 
-            year.client_contacts.add(*contact_list)
+                    year = YearOfParticipation.objects.filter(year=2017, company_id=company.id,
+                                                              company_setup=company_setup)
+                    year.save()
+
+                if not ContactSetup.objects.filter(contact_id=client_contact.id, year_id=year.id):
+                    contact_setup = ContactSetup()
+                    contact_setup.after_meeting = True
+                    contact_setup.access = True
+                    contact_setup.report_access = True
+                    contact_setup.invoice = True
+                    contact_setup.trainings = 'TRS Automotive'
+                    contact_setup.save()
+
+            if not YearOfParticipation.objects.filter(year=2017, company_id=company.id):
+                year = YearOfParticipation.objects.filter(year=2017, company_id=company.id, company_setup=company_setup)
+                year.save()
 
     return None

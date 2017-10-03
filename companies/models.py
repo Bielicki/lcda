@@ -24,8 +24,7 @@ class Company(models.Model):
 class YearOfParticipation(models.Model):
     year = models.PositiveIntegerField()
     company = models.ForeignKey('Company', related_name='years')
-    company_setup = models.ForeignKey('CompanySetup', related_name='company_setup')
-    # contacts_setups
+    company_setup = models.ForeignKey('CompanySetup', related_name='year')
 
     def __str__(self):
         return str(self.year)
@@ -55,7 +54,7 @@ class ClientContact(models.Model):
         return f'{self.designation} {self.first_name} {self.last_name}'
 
 
-class ClientSetup(models.Model):
+class ContactSetup(models.Model):
     year = models.ForeignKey(YearOfParticipation, related_name='contacts')
     client_contact = models.ForeignKey(ClientContact, related_name='setups')
     surveys = models.CharField(max_length=32)  # Choice in the Future
