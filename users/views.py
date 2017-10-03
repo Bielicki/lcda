@@ -95,7 +95,6 @@ from django import shortcuts
 #         return qs.filter(qset)
 
 
-
 class WelcomeView(LoginRequiredMixin, View):
     def get(self, request):
             return render(request, 'welcome.html')

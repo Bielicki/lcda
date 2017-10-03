@@ -60,17 +60,16 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql_psycopg2',
 #         'NAME': 'lcda_db',
-#         'USER': '',
-#         'PASSWORD': '',
-#         'HOST': '',
+#         'USER': 'sadi',
+#         'PASSWORD': '39228796Qe',
+#         'HOST': 'lcdadb.cb2ahyrbnr8y.us-east-2.rds.amazonaws.com',
 #         'PORT': '5432',
 #     }
-# }
+#  }
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -111,6 +110,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/files/'
 
+#For on the go excel extraction
 FILE_UPLOAD_MAX_MEMORY_SIZE = 26214400
 
 
